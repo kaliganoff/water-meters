@@ -1,9 +1,24 @@
-import { types } from "mobx-state-tree"
+import { types } from 'mobx-state-tree';
 
-const data = {"id":"526a0caae0e34c3e6dda9c07","_type":["HotWaterAreaMeter","AreaMeter"],"area":{"id":"526237d3e0e34c524382c158"},"is_automatic":null,"communication":"5b20f6bb64c0360001ed10ee","description":"464","serial_number":"","installation_date":"2012-02-01T00:00:00","brand_name":null,"model_name":null,"initial_values":[0.0]}
-
-const meterItem = types.model({
-    id: types.string,
+export const meterModel = types
+  .model({
+    id: types.identifier,
     _type: types.array(types.string),
+    area: types.model({
+      id: types.string,
+    }),
+    is_automatic: types.maybeNull(types.boolean),
+    description: types.maybeNull(types.string),
+    installation_date: types.string,
+    initial_values: types.array(types.number),
+  })
 
-})
+  .views((self) => ({
+    get typeLabel() {
+      return self._type.includes('HotWaterAreaMeter') ? 'ГВС' : 'ХВС';
+    },
+    get formattedDate() {
+      return new Date(self.installation_date)
+        .toLocaleDateString('ru-RU');
+    },
+  }));

@@ -1,9 +1,10 @@
 import { types, flow } from 'mobx-state-tree';
 import { fetchMeters } from '../api/metersApi';
+import { meterModel } from '../models/meterModel';
 
 export const RootStore = types
   .model({
-    meters: types.array(types.frozen()),
+    meters: types.array(meterModel),
     isLoading: false,
   })
   .actions((self) => ({

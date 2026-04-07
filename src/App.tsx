@@ -17,7 +17,9 @@ const App = observer(() => {
 
       {store.meters.map((meter: any, index: number) => (
         <div key={meter.id}>
-          {index + 1}. {meter._type} - {meter.installation_date} - {meter.is_automatic} - {meter.initial_values} - {JSON.stringify(meter.area)} - {meter.description}
+          {index + 1}. {meter.typeLabel} - {meter.formattedDate} -{' '}
+          {meter.is_automatic} - {meter.initial_values} -{' '}
+          {JSON.stringify(meter.area)} - {meter.description}
         </div>
       ))}
     </div>
