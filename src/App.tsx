@@ -19,7 +19,8 @@ const App = observer(() => {
         <div key={meter.id}>
           {index + 1}. {meter.typeLabel} - {meter.formattedDate} -{' '}
           {meter.is_automatic} - {meter.initial_values} -{' '}
-          {JSON.stringify(meter.area)} - {meter.description}
+          {meter.address ? meter.address.fullAddress : 'Загрузка адреса...'} -{' '}
+          {meter.description}
         </div>
       ))}
     </div>

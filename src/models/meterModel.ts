@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { getRoot, types } from 'mobx-state-tree';
 
 export const meterModel = types
   .model({
@@ -18,7 +18,13 @@ export const meterModel = types
       return self._type.includes('HotWaterAreaMeter') ? 'ГВС' : 'ХВС';
     },
     get formattedDate() {
-      return new Date(self.installation_date)
-        .toLocaleDateString('ru-RU');
+      return new Date(self.installation_date).toLocaleDateString('ru-RU');
+    },
+    get areaId() {
+      return self.area.id;
+    },
+    get address() {
+      const root: any = getRoot(self);
+      return root.areas.get(self.area.id);
     },
   }));
