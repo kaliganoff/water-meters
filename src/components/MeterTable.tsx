@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../store/storeProvider';
 import './MeterTable.css';
 import { WaterIcon } from './WaterIcon';
+import { DeleteIcon } from './DeleteIcon';
 
 export const MeterTable = observer(() => {
   const store = useStore();
@@ -34,9 +35,19 @@ export const MeterTable = observer(() => {
                 </td>
                 <td>{meter.formattedDate}</td>
                 <td>{meter.is_automatic ? 'да' : 'нет'}</td>
-                <td>{meter.initial_values?.[0] ?? '-'}</td>
+                <td>{meter.initial_values?.[0] ? meter.initial_values?.[0].toFixed(1) : '-'}</td>
                 <td>{address ? address.fullAddress : 'Загрузка...'}</td>
-                <td className="cell-gray">{meter.description || '-'}</td>
+                <td className="cell-gray">
+                  <div className="description-cell">
+                    <span>{meter.description || '-'}</span>
+                    <button
+                      type="button"
+                      className="delete-btn"
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </div>
+                </td>
               </tr>
             );
           })}

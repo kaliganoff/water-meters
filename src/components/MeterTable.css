@@ -49,3 +49,37 @@
   align-items: center;
   gap: 8px;
 }
+
+.description-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.delete-btn {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fee3e3;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.table tbody tr:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: #fed7d7;
+}
