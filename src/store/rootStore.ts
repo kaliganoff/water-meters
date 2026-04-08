@@ -4,6 +4,10 @@ import { meterModel } from '../models/meterModel';
 import { areaModel } from '../models/areaModel';
 import { fetchAreas } from '../api/areasApi';
 
+function extractAreaIds(meters: any[]): string[] {
+  return Array.from(new Set(meters.map((m) => m.area.id)));
+}
+
 export const RootStore = types
   .model({
     meters: types.array(meterModel),
@@ -17,20 +21,35 @@ export const RootStore = types
     get totalPages() {
       return Math.max(1, Math.ceil(self.totalCount / self.pageSize));
     },
+    get offset() {
+      return (self.currentPage - 1) * self.pageSize;
+    },
   }))
   .actions((self) => {
+    function setMeters(results: any[]) {
+      self.meters.replace(results);
+    }
+
+    const fetchAndStoreMeters = flow(function* () {
+      const data: any = yield fetchMeters(self.offset);
+
+      setMeters(data.results);
+      self.totalCount = data.count;
+
+      return data.results;
+    });
+
     const loadMeters = flow(function* (page = 1) {
       self.isLoading = true;
+
       try {
         const firstPage = Math.max(1, Math.floor(page));
-        const offset = (firstPage - 1) * self.pageSize;
-        const data: any = yield fetchMeters(offset);
-        self.meters = data.results;
         self.currentPage = firstPage;
-        self.totalCount = data.count;
-        const ids: string[] = Array.from(
-          new Set(data.results.map((m: any) => m.area.id))
-        );
+
+        const meters = yield fetchAndStoreMeters();
+
+        const ids = extractAreaIds(meters);
+
         yield loadAreas(ids);
       } catch (e) {
         console.error(e);
