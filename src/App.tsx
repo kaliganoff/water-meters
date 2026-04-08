@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './store/storeProvider';
+import { MeterTable } from './components/MeterTable';
+import './App.css';
 
 const App = observer(() => {
   const store = useStore();
@@ -9,20 +11,12 @@ const App = observer(() => {
     store.loadMeters();
   }, []);
 
-  if (store.isLoading) return <div>Loading...</div>;
+  if (store.isLoading) return <div>Загрузка...</div>;
 
   return (
-    <div>
-      <h1>Счётчики</h1>
-
-      {store.meters.map((meter: any, index: number) => (
-        <div key={meter.id}>
-          {index + 1}. {meter.typeLabel} - {meter.formattedDate} -{' '}
-          {meter.is_automatic} - {meter.initial_values} -{' '}
-          {meter.address ? meter.address.fullAddress : 'Загрузка адреса...'} -{' '}
-          {meter.description}
-        </div>
-      ))}
+    <div className="app">
+      <h1 className="title">Список счётчиков</h1>
+      <MeterTable />
     </div>
   );
 });
