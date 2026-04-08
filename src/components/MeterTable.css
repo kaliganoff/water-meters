@@ -1,5 +1,13 @@
+.table-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .table-wrapper {
-  height: 500px;
+  flex: 1;
+  min-height: 0;
   overflow: auto;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -82,4 +90,42 @@
 
 .delete-btn:hover {
   background: #fed7d7;
+}
+
+.table-footer {
+  padding-top: 12px;
+}
+
+.pagination {
+  width: 272px;
+  height: 32px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 12px;
+  background: transparent;
+  color: #1f2939;
+  cursor: pointer;
+}
+
+.page-btn.is-active {
+  background: #ced5de;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

@@ -7,9 +7,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://showroom.eis24.me',
+        target: 'https://showroom.eis24.me',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/c300/api/v4/test'),
+        secure: true,
       },
     },
   },

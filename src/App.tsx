@@ -8,7 +8,7 @@ const App = observer(() => {
   const store = useStore();
 
   useEffect(() => {
-    store.loadMeters();
+    store.loadMeters(1);
   }, []);
 
   if (store.isLoading) return <div>Загрузка...</div>;

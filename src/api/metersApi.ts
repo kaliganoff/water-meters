@@ -7,3 +7,13 @@ export async function fetchMeters(offset = 0) {
 
   return result.json();
 }
+
+export async function deleteMeter(id: string) {
+  const result = await fetch(`/api/meters/${id}/`, {
+    method: 'DELETE',
+  });
+
+  if (!result.ok) {
+    throw new Error('Failed to delete');
+  }
+}

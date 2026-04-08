@@ -1,12 +1,10 @@
 export const DeleteIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 14 15"
-    fill="none"
-  >
-    <path d="M6 5.33333V11.3333H4.66667V5.33333H6Z" fill="#C53030"/>
-    <path d="M8.66667 5.33333V11.3333H7.33333V5.33333H8.66667Z" fill="#C53030"/>
+  <svg width="16" height="16" viewBox="0 0 14 15" fill="none">
+    <path d="M6 5.33333V11.3333H4.66667V5.33333H6Z" fill="#C53030" />
+    <path
+      d="M8.66667 5.33333V11.3333H7.33333V5.33333H8.66667Z"
+      fill="#C53030"
+    />
     <path
       fillRule="evenodd"
       clipRule="evenodd"
