@@ -1,4 +1,8 @@
 import { getRoot, types } from 'mobx-state-tree';
+import type { Instance } from 'mobx-state-tree';
+import { areaModel } from './areaModel';
+
+type AreaInstance = Instance<typeof areaModel>;
 
 export const meterModel = types
   .model({
@@ -23,8 +27,13 @@ export const meterModel = types
     get areaId() {
       return self.area.id;
     },
-    get address() {
-      const root: any = getRoot(self);
+    get address(): AreaInstance | undefined {
+      const root = getRoot(self) as {
+        areas: {
+          get: (id: string) => AreaInstance | undefined;
+        };
+      };
+
       return root.areas.get(self.area.id);
     },
   }));

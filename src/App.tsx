@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStore } from './store/storeProvider';
+import { useStore } from './store/storeContext';
 import { MeterTable } from './components/MeterTable';
 import './App.css';
 
@@ -9,7 +9,7 @@ const App = observer(() => {
 
   useEffect(() => {
     store.loadMeters(1);
-  }, []);
+  }, [store]);
 
   if (store.isLoading) return <div>Загрузка...</div>;
 

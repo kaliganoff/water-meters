@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../store/storeProvider';
+import { useStore } from '../store/storeContext';
 import './MeterTable.css';
 import { WaterIcon } from './WaterIcon';
 import { DeleteIcon } from './DeleteIcon';

@@ -1,10 +1,19 @@
-import { types, flow } from 'mobx-state-tree';
+import { applySnapshot, flow, types } from 'mobx-state-tree';
+import type { Instance, SnapshotIn } from 'mobx-state-tree';
 import { deleteMeter, fetchMeters } from '../api/metersApi';
 import { meterModel } from '../models/meterModel';
 import { areaModel } from '../models/areaModel';
 import { fetchAreas } from '../api/areasApi';
 
-function extractAreaIds(meters: any[]): string[] {
+type ApiList<T> = {
+  count: number;
+  results: T[];
+};
+
+type MeterSnapshotIn = SnapshotIn<typeof meterModel>;
+type AreaSnapshotIn = SnapshotIn<typeof areaModel>;
+
+function extractAreaIds(meters: Array<{ area: { id: string } }>): string[] {
   return Array.from(new Set(meters.map((m) => m.area.id)));
 }
 
@@ -26,12 +35,12 @@ export const RootStore = types
     },
   }))
   .actions((self) => {
-    function setMeters(results: any[]) {
-      self.meters.replace(results);
+    function setMeters(results: MeterSnapshotIn[]) {
+      applySnapshot(self.meters, results);
     }
 
     const fetchAndStoreMeters = flow(function* () {
-      const data: any = yield fetchMeters(self.offset);
+      const data: ApiList<MeterSnapshotIn> = yield fetchMeters(self.offset);
 
       setMeters(data.results);
       self.totalCount = data.count;
@@ -81,9 +90,9 @@ export const RootStore = types
       if (!unknownIds.length) return;
 
       try {
-        const data = yield fetchAreas(unknownIds);
+        const data: ApiList<AreaSnapshotIn> = yield fetchAreas(unknownIds);
 
-        data.results.forEach((area: any) => {
+        data.results.forEach((area) => {
           self.areas.set(area.id, area);
         });
       } catch (e) {
@@ -98,3 +107,5 @@ export const RootStore = types
       loadAreas,
     };
   });
+
+export type RootStoreInstance = Instance<typeof RootStore>;

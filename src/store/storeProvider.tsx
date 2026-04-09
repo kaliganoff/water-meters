@@ -1,15 +1,8 @@
-import { createContext, useContext } from 'react';
-import { RootStore } from './rootStore';
+import type { PropsWithChildren } from 'react';
+import { StoreContext, store } from './storeContext';
 
-const store = RootStore.create({
-  meters: [],
-  isLoading: false,
-});
+type StoreProviderProps = PropsWithChildren;
 
-const StoreContext = createContext(store);
-
-export const StoreProvider = ({ children }: any) => (
+export const StoreProvider = ({ children }: StoreProviderProps) => (
   <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 );
-
-export const useStore = () => useContext(StoreContext);
