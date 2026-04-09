@@ -4,7 +4,7 @@
 
 ## Используемые технологии
 
-React, TypeScript, mox-state-tree
+React, TypeScript, mobx-state-tree
 
 ## Запуск проекта
 
